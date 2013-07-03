@@ -3,6 +3,9 @@
  * and open the template in the editor.
  */
 package vista;
+import modelo.*;
+
+import modelo.BD;
 
 /**
  *
@@ -81,6 +84,8 @@ public class Guardar extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Guardar().setVisible(true);
+                
+             //   bd archivo = new BD;
             }
         });
     }

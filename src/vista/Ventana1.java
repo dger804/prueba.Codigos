@@ -8,6 +8,8 @@ import java.awt.Frame;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Vector;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
@@ -21,16 +23,14 @@ import javax.swing.JOptionPane;
 public class Ventana1 extends javax.swing.JFrame {
     DefaultListModel model = new DefaultListModel();
     
-    
+    DefaultListModel model1 = new DefaultListModel();
+            
     
     /**
      * Creates new form Ventana1
      */
     public Ventana1() {
         initComponents();
-          jButton1.setDefaultCapable(true);
-        
-        
     }
 
     /**
@@ -77,7 +77,8 @@ public class Ventana1 extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Agregar");
+        jButton1.setText("Registrar");
+        jButton1.setEnabled(false);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -131,7 +132,7 @@ public class Ventana1 extends javax.swing.JFrame {
                         .addComponent(jButton6))
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addContainerGap(196, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,15 +160,43 @@ public class Ventana1 extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Tickets", jPanel1);
 
+        jList2.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jList2ValueChanged(evt);
+            }
+        });
         jScrollPane2.setViewportView(jList2);
 
         jButton3.setText("Registrar");
+        jButton3.setEnabled(false);
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jTextField2.setText("Digite el código aquí");
+        jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField2(evt);
+            }
+        });
 
         jButton4.setText("Volver");
+        jButton4.setEnabled(false);
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Buscar");
+        jButton5.setEnabled(false);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Sin registrar");
 
@@ -176,6 +205,7 @@ public class Ventana1 extends javax.swing.JFrame {
         jLabel5.setText("</ubicacion/nombrearchivo.xls>");
 
         jList3.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jList3.setEnabled(false);
         jScrollPane3.setViewportView(jList3);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -187,27 +217,26 @@ public class Ventana1 extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 342, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)
                         .addGap(110, 110, 110))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jButton3)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jButton3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton4))
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton4)
-                                .addGap(42, 42, 42))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel5)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(jButton5)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(61, 61, 61))))
+                                .addComponent(jButton5)))
+                        .addGap(41, 41, 41)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,11 +249,11 @@ public class Ventana1 extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton5))
-                        .addGap(64, 64, 64)
+                        .addGap(58, 58, 58)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton4)
                             .addComponent(jButton3)))
@@ -258,17 +287,24 @@ public class Ventana1 extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         
-        //String text = jTextField1.getText();
-        
-        
         if (evt.getSource().equals(jButton1)) {
             if (! jTextField1.getText().trim().equals("")) {
                 if (!jTextField1.getText().trim().equals("Digite el código aquí")) {
                     
+                    /*
+                     * comprobar q el ticket no se encuentra en la lista
+                    String name = jTextField1.getText();
+
+                     //User did not type in a unique name...
+                    if (name.equals("") || alreadyInList(name)) { 
+                    
+                    }*/
                     model.addElement(jTextField1.getText());
                     this.jList1.setModel(model);
+                    this.jList3.setModel(model);
                     
                     jTextField1.setText(null);
+                    
                     this.jTextField1.requestFocus();
                     jButton2.setEnabled(true);
                     
@@ -280,10 +316,7 @@ public class Ventana1 extends javax.swing.JFrame {
                     jTextField1.setText(null);
                     this.jTextField1.requestFocus();
                 }
-            }
-            
-        
-        
+            }  
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -317,6 +350,8 @@ public class Ventana1 extends javax.swing.JFrame {
     private void jText1(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jText1
         // TODO add your handling code here:
         jTextField1.setText(null);
+        jButton1.setEnabled(true);
+        
     }//GEN-LAST:event_jText1
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -326,9 +361,7 @@ public class Ventana1 extends javax.swing.JFrame {
             
             int a = jList1.getSelectedIndex();
             model.remove(a);
-            
             int size = model.getSize();
-
             if (size == 0) { 
                 jButton2.setEnabled(false);
             }else{
@@ -339,12 +372,89 @@ public class Ventana1 extends javax.swing.JFrame {
 
                 jList1.setSelectedIndex(a);
                 jList1.ensureIndexIsVisible(a);
+                jList3.setSelectedIndex(a);
+                jList3.ensureIndexIsVisible(a);
             }
         } else{
             JOptionPane.showMessageDialog(null, "Debe seleccionar uno o más tickets para eliminar");
         }       
         
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField2(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2
+        // TODO add your handling code here:
+        //focus jtextfield2
+        jTextField2.setText(null);
+        jButton5.setEnabled(true);
+        jButton3.setEnabled(false);
+        
+    }//GEN-LAST:event_jTextField2
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        //buscar
+        
+        if (!jTextField2.getText().trim().equals("") || !jTextField2.getText().trim().equals(null)) {
+            int size = model.getSize();
+            String texto = jTextField2.getText();
+            
+            for (int i = 0; i < size; i++) {
+                String textol = model.getElementAt(i).toString();
+                if ( textol.equals(texto)) {
+                    
+                    jList3.setSelectedIndex(i);
+                    jButton3.setEnabled(true);
+                    
+                }
+            }      
+        }else{
+            JOptionPane.showMessageDialog(null, "Digite un código a buscar");
+        }
+        
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        
+        
+        // registrar
+        if (!jTextField2.getText().trim().equals("")) {
+        
+            model1.addElement(jTextField2.getText());
+            jList2.setModel(model1);
+
+            int a = jList3.getSelectedIndex();
+            model.remove(a);
+            jButton3.setEnabled(false);
+            
+            
+        }
+        jTextField2.setText(null);
+        jButton4.setEnabled(false);
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        // devolver
+        int a = jList2.getSelectedIndex();
+        if (a==-1) {
+            JOptionPane.showMessageDialog(null, "Seleccione un elemento para devolver");
+        } else {
+        }
+        model.addElement(model1.getElementAt(a));
+        jList3.setModel(model);
+        
+        model1.remove(a);
+        jButton4.setEnabled(false);
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jList2ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList2ValueChanged
+        // TODO add your handling code here:
+        jButton4.setEnabled(true);
+    }//GEN-LAST:event_jList2ValueChanged
 
     /**
      * @param args the command line arguments

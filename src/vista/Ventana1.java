@@ -4,27 +4,33 @@
  */
 package vista;
 
+import java.awt.Frame;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.Vector;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author diego
  */
 public class Ventana1 extends javax.swing.JFrame {
-    int i = 0;
-    String v[];
+    DefaultListModel model = new DefaultListModel();
+    
+    
     
     /**
      * Creates new form Ventana1
      */
     public Ventana1() {
         initComponents();
-        v=new String[100];        
+          jButton1.setDefaultCapable(true);
+        
+        
     }
 
     /**
@@ -57,12 +63,11 @@ public class Ventana1 extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        jList5 = new javax.swing.JList();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jList3 = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(jList1);
 
         jTextField1.setText("Digite el código aquí");
@@ -80,6 +85,12 @@ public class Ventana1 extends javax.swing.JFrame {
         });
 
         jButton2.setText("Eliminar");
+        jButton2.setEnabled(false);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("Cargar ");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
@@ -148,11 +159,6 @@ public class Ventana1 extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Tickets", jPanel1);
 
-        jList2.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane2.setViewportView(jList2);
 
         jButton3.setText("Registrar");
@@ -169,8 +175,8 @@ public class Ventana1 extends javax.swing.JFrame {
 
         jLabel5.setText("</ubicacion/nombrearchivo.xls>");
 
-        jList5.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane5.setViewportView(jList5);
+        jList3.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane3.setViewportView(jList3);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -185,7 +191,7 @@ public class Ventana1 extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addGap(110, 110, 110))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -223,7 +229,7 @@ public class Ventana1 extends javax.swing.JFrame {
                             .addComponent(jButton4)
                             .addComponent(jButton3)))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
-                    .addComponent(jScrollPane5))
+                    .addComponent(jScrollPane3))
                 .addGap(0, 22, Short.MAX_VALUE))
         );
 
@@ -252,28 +258,27 @@ public class Ventana1 extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         
-        String text = jTextField1.getText();
+        //String text = jTextField1.getText();
+        
         
         if (evt.getSource().equals(jButton1)) {
             if (! jTextField1.getText().trim().equals("")) {
                 if (!jTextField1.getText().trim().equals("Digite el código aquí")) {
-                    v[i]=jTextField1.getText(); 
-                    jList1.setListData(v);
-                    i++;
                     
-                    //this.jList1.setModel(v); 
+                    model.addElement(jTextField1.getText());
+                    this.jList1.setModel(model);
                     
                     jTextField1.setText(null);
                     this.jTextField1.requestFocus();
-                    
+                    jButton2.setEnabled(true);
                     
                     }else{
                         jTextField1.setText(null);
                         this.jTextField1.requestFocus();
                     }
-                    
-                    
-                    
+                }else{
+                    jTextField1.setText(null);
+                    this.jTextField1.requestFocus();
                 }
             }
             
@@ -313,6 +318,33 @@ public class Ventana1 extends javax.swing.JFrame {
         // TODO add your handling code here:
         jTextField1.setText(null);
     }//GEN-LAST:event_jText1
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+           
+        if (jList1.getSelectedValue()!=null) {
+            
+            int a = jList1.getSelectedIndex();
+            model.remove(a);
+            
+            int size = model.getSize();
+
+            if (size == 0) { 
+                jButton2.setEnabled(false);
+            }else{
+                if (a == model.getSize()) {
+                    //removed item in last position
+                    a--;
+                }
+
+                jList1.setSelectedIndex(a);
+                jList1.ensureIndexIsVisible(a);
+            }
+        } else{
+            JOptionPane.showMessageDialog(null, "Debe seleccionar uno o más tickets para eliminar");
+        }       
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -364,12 +396,12 @@ public class Ventana1 extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JList jList1;
     private javax.swing.JList jList2;
-    private javax.swing.JList jList5;
+    private javax.swing.JList jList3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;

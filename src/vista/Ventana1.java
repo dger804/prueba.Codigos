@@ -28,6 +28,7 @@ public class Ventana1 extends javax.swing.JFrame {
         
         jTextField1.requestFocus();
         
+        jButton4.setVisible(false);
         jButton6.setVisible(false);
         jButton7.setVisible(false);
         jLabel2.setVisible(false);
@@ -76,6 +77,15 @@ public class Ventana1 extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(738, 630));
 
         jPanel1.setBackground(new java.awt.Color(247, 246, 246));
+        jPanel1.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jpanel1focusjtextfield(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
         jScrollPane1.setViewportView(jList1);
 
@@ -175,6 +185,16 @@ public class Ventana1 extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Tickets", jPanel1);
 
+        jPanel2.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                vvv(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
         jList2.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 jList2ValueChanged(evt);
@@ -189,11 +209,21 @@ public class Ventana1 extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
+        jButton3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                regEnter(evt);
+            }
+        });
 
         jTextField2.setText("Digite el código aquí");
         jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTextField2(evt);
+            }
+        });
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                busEnter(evt);
             }
         });
 
@@ -365,36 +395,53 @@ public class Ventana1 extends javax.swing.JFrame {
                     
                     
                     int size = model.getSize();
-                                       
-                    if (size==0) { //si lista vacía entonces ingrese
-                        
-                        model.addElement(jTextField1.getText());
-                        this.jList1.setModel(model);
-                        this.jList3.setModel(model);
-                        
-                        jButton2.setEnabled(true);
-                    } else { //si no comprobar q el ticket no se encuentre en la lista
-                        
-                        boolean sw = false;
-                        
-                        for (int i = 0; i < size; i++) { // recorro la lista buscando el elemento
-                            String textol = model.getElementAt(i).toString();
-                            if ( textol.equals(jTextField1.getText())) {
-                                sw=true;    // encontrado
-                            }
+                    // comprobar si el elemento a ingresar ya esta en la lista de regristrados
+                    
+                    int size1 = model1.getSize();
+                    String texto = jTextField1.getText();
+                    boolean sw1=false;
+                    for (int i = 0; i < size1; i++) {
+                        String textol = model1.getElementAt(i).toString();
+                        if ( textol.equals(texto)) {                    
+                            jList2.setSelectedIndex(i);
+                            sw1=true;
                         }
-                        if (sw==true) { 
-                            JOptionPane.showMessageDialog(null, "Código repetido");
-                            
-                        } else {    // si no encontrado agregarlo
+
+                    }      
+                    if (sw1==true) {
+                            JOptionPane.showMessageDialog(null, "Código ya esta registrado");
+                    }else{
+                    
+                    
+                        if (size==0) { //si lista vacía entonces ingrese
+
                             model.addElement(jTextField1.getText());
                             this.jList1.setModel(model);
                             this.jList3.setModel(model);
 
-                            jButton2.setEnabled(true);    
+                            jButton2.setEnabled(true);
+                        } else { //si no comprobar q el ticket no se encuentre en la lista misma
+
+                            boolean sw = false;
+
+                            for (int i = 0; i < size; i++) { // recorro la lista buscando el elemento
+                                String textol = model.getElementAt(i).toString();
+                                if ( textol.equals(jTextField1.getText())) {
+                                    sw=true;    // encontrado
+                                }
+                            }
+                            if (sw==true) { 
+                                JOptionPane.showMessageDialog(null, "Código repetido");
+
+                            } else {    // si no encontrado agregarlo
+                                model.addElement(jTextField1.getText());
+                                this.jList1.setModel(model);
+                                this.jList3.setModel(model);
+
+                                jButton2.setEnabled(true);    
+                            }
                         }
                     }
-                    
                     
                     
                     jTextField1.setText(null);
@@ -415,13 +462,16 @@ public class Ventana1 extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        // dialogo cargar
        Cargar c = new Cargar();
        c.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        /*Guardar c = new Guardar();
+        /*  Guardar 
+         * 
+        c = new Guardar();
         c.setVisible(true);*/
         
         // 
@@ -471,7 +521,7 @@ public class Ventana1 extends javax.swing.JFrame {
                 jList3.ensureIndexIsVisible(a);
             }
         } else{
-            JOptionPane.showMessageDialog(null, "Debe seleccionar uno o más tickets para eliminar");
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un ticket para eliminar");
         }       
         
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -489,19 +539,23 @@ public class Ventana1 extends javax.swing.JFrame {
         // TODO add your handling code here:
         //buscar
         
-        if (!jTextField2.getText().trim().equals("") || !jTextField2.getText().trim().equals(null)) {
+        if (!jTextField2.getText().trim().equals("")) {
             int size = model.getSize();
             String texto = jTextField2.getText();
-            
+            boolean sw=false;
             for (int i = 0; i < size; i++) {
                 String textol = model.getElementAt(i).toString();
-                if ( textol.equals(texto)) {
-                    
+                if ( textol.equals(texto)) {                    
                     jList3.setSelectedIndex(i);
                     jButton3.setEnabled(true);
-                    
+                    sw=true;
+                    jButton3.requestFocus();
                 }
+                
             }      
+            if (sw==false) {
+                    JOptionPane.showMessageDialog(null, "Código no encontrado");
+            }
         }else{
             JOptionPane.showMessageDialog(null, "Digite un código a buscar");
         }
@@ -515,7 +569,9 @@ public class Ventana1 extends javax.swing.JFrame {
         
         // registrar
         if (!jTextField2.getText().trim().equals("")) {
-        
+            
+            
+            
             model1.addElement(jTextField2.getText());
             jList2.setModel(model1);
 
@@ -607,6 +663,51 @@ public class Ventana1 extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_IngEnter
+
+    private void busEnter(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_busEnter
+        // TODO add your handling code here:
+        
+        // enter - buscar
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            if (!jTextField2.getText().trim().equals("")) {
+                int size = model.getSize();
+                String texto = jTextField2.getText();
+                boolean sw = false;    
+                for (int i = 0; i < size; i++) {
+                    String textol = model.getElementAt(i).toString();
+                    if ( textol.equals(texto)) {
+                        jList3.setSelectedIndex(i);
+                        jButton3.setEnabled(true);
+                        jButton3.requestFocus();              
+                        sw=true;
+                    }
+                } 
+                if (sw==false) {
+                    JOptionPane.showMessageDialog(null, "Código no encontrado");
+                }
+                
+                
+                
+            }else{
+                JOptionPane.showMessageDialog(null, "Digite un código a buscar");
+            }
+        }
+    }//GEN-LAST:event_busEnter
+
+    private void regEnter(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_regEnter
+        // TODO add your handling code here:        
+        jTextField2.requestFocus();
+    }//GEN-LAST:event_regEnter
+
+    private void vvv(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_vvv
+        // TODO add your handling code here:
+        jTextField2.requestFocus();
+    }//GEN-LAST:event_vvv
+
+    private void jpanel1focusjtextfield(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jpanel1focusjtextfield
+        // TODO add your handling code here:
+        jTextField1.requestFocus();
+    }//GEN-LAST:event_jpanel1focusjtextfield
 
     /**
      * @param args the command line arguments

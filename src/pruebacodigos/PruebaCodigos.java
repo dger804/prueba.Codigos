@@ -4,9 +4,7 @@
  */
 package pruebacodigos;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import javax.swing.DefaultListModel;
+import javax.swing.UIManager;
 import vista.*;
 
 /**
@@ -21,12 +19,20 @@ public class PruebaCodigos {
     public static void main(String[] args) {
         // TODO code application logic here
 
-        Ventana1 v = new Ventana1();
-        v.setVisible(true);
+        try {
+            
+            javax.swing.UIManager.setLookAndFeel( 
+            javax.swing.UIManager.getSystemLookAndFeelClassName()); 
+            
+            Ventana1 v = new Ventana1();
+            v.setVisible(true);
+        } catch (Exception e) {
+        }
         
         
-        //Ventana1.jList1.setModel(lista);
-        //
+        
+        
+        
     }
     
     

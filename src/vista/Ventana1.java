@@ -4,6 +4,7 @@
  */
 package vista;
 
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileWriter;
@@ -20,19 +21,24 @@ import javax.swing.JOptionPane;
 public class Ventana1 extends javax.swing.JFrame {
     DefaultListModel model = new DefaultListModel();
     DefaultListModel model1 = new DefaultListModel();
+    Component temp;
+    int ind;
+    String psw="1234";
     /**
      * Creates new form Ventana1
      */
     public Ventana1() {
         initComponents();
         
-        jTextField1.requestFocus();
-        
-        jButton4.setVisible(false);
-        jButton6.setVisible(false);
-        jButton7.setVisible(false);
-        jLabel2.setVisible(false);
-        jLabel5.setVisible(false);
+         //jTextField1.requestFocus();
+        ind= 0;
+        temp=jTabbedPane1.getComponentAt(ind);
+        jTabbedPane1.removeTabAt(ind);
+        jButton4.setVisible(false); // boton devolver
+        jButton6.setVisible(false); // boton cargar
+        jButton7.setVisible(false); // boton guardar
+        jLabel2.setVisible(false);  // label informativo donde se encuentra el archivo cargado en jpanel1
+        jLabel5.setVisible(false);  // label informativo donde se encuentra el archivo cargado en jpanel2
     }
 
     /**
@@ -71,12 +77,30 @@ public class Ventana1 extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(java.awt.Color.darkGray);
-        setPreferredSize(new java.awt.Dimension(738, 630));
+
+        jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
+        jTabbedPane1.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                octjpanel1(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(247, 246, 246));
+        jPanel1.setEnabled(false);
         jPanel1.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
@@ -90,6 +114,7 @@ public class Ventana1 extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jList1);
 
         jTextField1.setText("Digite el código aquí");
+        jTextField1.setEnabled(false);
         jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jText1(evt);
@@ -180,7 +205,7 @@ public class Ventana1 extends javax.swing.JFrame {
                             .addComponent(jButton7)
                             .addComponent(jButton6)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Tickets", jPanel1);
@@ -276,14 +301,11 @@ public class Ventana1 extends javax.swing.JFrame {
                                 .addComponent(jButton4))))
                     .addComponent(jLabel3)
                     .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(41, 41, 41)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(jLabel4)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE))))
+                    .addComponent(jLabel4)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 91, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -294,7 +316,7 @@ public class Ventana1 extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -304,7 +326,7 @@ public class Ventana1 extends javax.swing.JFrame {
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4)
-                        .addGap(0, 262, Short.MAX_VALUE))
+                        .addGap(0, 257, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -314,6 +336,8 @@ public class Ventana1 extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Registrar", jPanel2);
+
+        jTabbedPane1.setSelectedIndex(1);
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/banner.gif"))); // NOI18N
 
@@ -360,6 +384,45 @@ public class Ventana1 extends javax.swing.JFrame {
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
+        jMenu1.setText("Menú");
+
+        jMenu3.setText("Administrador");
+
+        jMenuItem2.setText("Ingresar");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem2);
+
+        jMenuItem3.setText("Cambiar contraseña");
+        jMenuItem3.setEnabled(false);
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem3);
+
+        jMenu1.add(jMenu3);
+
+        jMenuItem1.setText("Usuario");
+        jMenuItem1.setEnabled(false);
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Acerca de");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -378,15 +441,15 @@ public class Ventana1 extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane1)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    // ingresar - ticket
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        // ingresar - ticket
+        
         
         if (evt.getSource().equals(jButton1)) {
             if (! jTextField1.getText().trim().equals("")) {
@@ -460,17 +523,17 @@ public class Ventana1 extends javax.swing.JFrame {
                 }
             }  
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    // dialogo cargar - no implementado - no funcional
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        // dialogo cargar
+        
        Cargar c = new Cargar();
        c.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
-
+    // dialogo Guardar - no implementado - no funcional
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        /*  Guardar 
+        /*   
          * 
         c = new Guardar();
         c.setVisible(true);*/
@@ -491,17 +554,17 @@ public class Ventana1 extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButton7ActionPerformed
-
+    // Para mantener el jtextfield1 limpio cada vez q se enfoque
     private void jText1(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jText1
         // TODO add your handling code here:
         jTextField1.setText(null);
         jButton1.setEnabled(true);
         
     }//GEN-LAST:event_jText1
-
+    // eliminar - ticket
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        // eliminar - ticket
+        
         
         if (jList1.getSelectedValue()!=null) {
             
@@ -526,19 +589,19 @@ public class Ventana1 extends javax.swing.JFrame {
         }       
         
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    // para mantener el jtextfield2 limpio cada vez q se enfoque
     private void jTextField2(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2
         // TODO add your handling code here:
-        //focus jtextfield2
+        
         jTextField2.setText(null);
         jButton5.setEnabled(true);
         jButton3.setEnabled(false);
         
     }//GEN-LAST:event_jTextField2
-
+    // buscar
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        //buscar
+       
         
         if (!jTextField2.getText().trim().equals("")) {
             int size = model.getSize();
@@ -563,12 +626,10 @@ public class Ventana1 extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jButton5ActionPerformed
-
+    // registrar
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         
-        
-        // registrar
         if (!jTextField2.getText().trim().equals("")) {
             
             
@@ -586,10 +647,10 @@ public class Ventana1 extends javax.swing.JFrame {
         jButton4.setEnabled(false);
         
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    // devolver 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        // devolver
+        
         int a = jList2.getSelectedIndex();
         if (a==-1) {
             JOptionPane.showMessageDialog(null, "Seleccione un elemento para devolver");
@@ -602,16 +663,16 @@ public class Ventana1 extends javax.swing.JFrame {
         jButton4.setEnabled(false);
         
     }//GEN-LAST:event_jButton4ActionPerformed
-
+    // habilita boton devolver - setenable(true)
     private void jList2ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList2ValueChanged
         // TODO add your handling code here:
         jButton4.setEnabled(true);
     }//GEN-LAST:event_jList2ValueChanged
-
+    // Enter - jtextfield1 ingresar
     private void IngEnter(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_IngEnter
         // TODO add your handling code here:
         
-        // Enter - jtextfield1 ingresar
+        
         
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
            
@@ -664,11 +725,11 @@ public class Ventana1 extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_IngEnter
-
+    // enter - buscar
     private void busEnter(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_busEnter
         // TODO add your handling code here:
         
-        // enter - buscar
+        
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
             if (!jTextField2.getText().trim().equals("")) {
                 int size = model.getSize();
@@ -694,21 +755,95 @@ public class Ventana1 extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_busEnter
-
+    // para enfocar en jtextfield2 cada vez que se da enter
     private void regEnter(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_regEnter
         // TODO add your handling code here:        
         jTextField2.requestFocus();
     }//GEN-LAST:event_regEnter
-
+    // para cada vez que se abre el jpanel2 mantener enfocado en el jtextfield2
     private void vvv(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_vvv
         // TODO add your handling code here:
         jTextField2.requestFocus();
     }//GEN-LAST:event_vvv
-
+    // para cada vez que se abre el jpanel1 mantener enfocado en el jtextfield1
     private void jpanel1focusjtextfield(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jpanel1focusjtextfield
         // TODO add your handling code here:
         jTextField1.requestFocus();
     }//GEN-LAST:event_jpanel1focusjtextfield
+    
+    private void octjpanel1(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_octjpanel1
+        // TODO add your handling code here:
+        
+
+    }//GEN-LAST:event_octjpanel1
+        // ingresar como admin
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        
+        // falta validar
+        String psw="1234";
+        String contr = JOptionPane.showInputDialog("Ingrese contraseña");
+        if (contr == null ? psw == null : contr.equals(psw)) {
+            jTextField1.setEnabled(true);
+            jTabbedPane1.add("Tickets", temp); // se adiciona el panel tickets        
+            jMenuItem1.setEnabled(true);
+            jButton4.setVisible(true);
+            jMenuItem3.setEnabled(true);
+            jTabbedPane1.setSelectedIndex(1);
+            jMenuItem2.setEnabled(false);
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Contraseña errada");
+        }
+        
+       
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+        // ingresar como user
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        jMenuItem3.setEnabled(false);   // menu admin-cambiar contraseña
+        jButton4.setVisible(false);     // boton volver
+        jMenuItem2.setEnabled(true);    // menu admin-ingresar
+        jMenuItem1.setEnabled(false);   // menu usuario
+        
+        ind= jTabbedPane1.getSelectedIndex();
+        
+        if (jTabbedPane1.getComponentAt(ind)==temp) {
+            jTabbedPane1.removeTabAt(ind);
+        } else {
+            if (ind==0) {
+                ind=ind+1;
+                temp=jTabbedPane1.getComponentAt(ind);
+                jTabbedPane1.removeTabAt(ind); // se elimina el panel q no debe ver el usuario
+                
+            } else {
+                temp=jTabbedPane1.getComponentAt(ind);
+                jTabbedPane1.removeTabAt(ind); // se elimina el panel q no debe ver el usuario
+                
+            }            
+        }
+        
+        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+        // Cambio de contraseña
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+         
+         String contr = JOptionPane.showInputDialog("Ingrese contraseña vieja");
+         String contr2 = JOptionPane.showInputDialog("Ingrese contraseña vieja otra vez");
+         if (contr == null ? contr2 == null : contr.equals(contr2)&& (psw == null ? contr == null : psw.equals(contr)) ) {
+            String contr3 = JOptionPane.showInputDialog("Ingrese contraseña nueva");
+            String contr4 = JOptionPane.showInputDialog("Ingrese contraseña nueva otra vez");
+             if (contr3 == null ? contr4 == null : contr3.equals(contr4)) {
+                 psw=contr4;
+                 JOptionPane.showMessageDialog(null,"Contraseña agregada correctamente");
+             } else {
+                 JOptionPane.showMessageDialog(null,"No coinciden las contraseñas nueva");
+             }
+        } else {
+             JOptionPane.showMessageDialog(null,"Contraseña errada o no coinciden las contraseñas ");
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -763,6 +898,13 @@ public class Ventana1 extends javax.swing.JFrame {
     private javax.swing.JList jList1;
     private javax.swing.JList jList2;
     private javax.swing.JList jList3;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

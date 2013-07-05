@@ -6,13 +6,17 @@ package vista;
 
 import java.awt.Component;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.security.CodeSource;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import org.jcp.xml.dsig.internal.dom.Utils;
 
 /**
  *
@@ -23,22 +27,69 @@ public class Ventana1 extends javax.swing.JFrame {
     DefaultListModel model1 = new DefaultListModel();
     Component temp;
     int ind;
-    String psw="1234";
+    String psw;
     /**
      * Creates new form Ventana1
      */
     public Ventana1() {
         initComponents();
         
-         //jTextField1.requestFocus();
-        ind= 0;
-        temp=jTabbedPane1.getComponentAt(ind);
-        jTabbedPane1.removeTabAt(ind);
+        // <editor-fold defaultstate="collapsed" desc="Proceso para leer archivo pwd (contraseña)">
+        //CodeSource codeSource = funcionesUtilidad.class.getProtectionDomain().getCodeSource();
+        //new File(codeSource.getLocation().toURI().getPath());
+        //File jarFile = new File(Utils.class.getResource("/pwd").getFile());
+        //File jarDir = jarFile.getParentFile();
+        //JOptionPane.showMessageDialog(null, jarFile);
+        File archivo = null;
+        FileReader fr = null;
+        BufferedReader br = null;
+ 
+        try {
+        // 1 Apertura del fichero y creacion de BufferedReader para poder
+        //   hacer una lectura comoda (disponer del metodo readLine()).
+            
+            //String curDir = System.getProperty("/");
+            //JOptionPane.showMessageDialog(null, curDir);
+        
+        archivo = new File ("/home/diego/Escritorio/pwd"); //"/home/diego/Escritorio/pwd"
+        fr = new FileReader (archivo);
+        br = new BufferedReader(fr);
+
+        // 2 Lectura del fichero
+        String linea=br.readLine();
+            if(linea!=null) {
+                psw=linea;
+            }else{
+                JOptionPane.showMessageDialog(null, "archivo no contiene la contraseña");
+            }
+            
+        }
+        catch(Exception e){
+                
+        }
+        finally{
+        // 3 En el finally cerramos el fichero, para asegurarnos
+        //   que se cierra tanto si todo va bien como si salta 
+        //   una excepcion.
+            try{                    
+                if( null != fr ){   
+                    fr.close();     
+                    }
+            }
+            catch (Exception e2){ 
+                
+            }
+        }
+        //</editor-fold>
+        
+        ind= 0; // indice siempre inicia en 0
+        temp=jTabbedPane1.getComponentAt(ind); //guarda temporalmente lo q esta en el index ind del jtabbed panel
+        jTabbedPane1.removeTabAt(ind); //"esconder el jpanel1
         jButton4.setVisible(false); // boton devolver
         jButton6.setVisible(false); // boton cargar
-        jButton7.setVisible(false); // boton guardar
-        jLabel2.setVisible(false);  // label informativo donde se encuentra el archivo cargado en jpanel1
-        jLabel5.setVisible(false);  // label informativo donde se encuentra el archivo cargado en jpanel2
+        
+        jLabel2.setVisible(false);  // label informativo del path donde se encuentra el archivo cargado en jpanel1
+        jLabel5.setVisible(false);  // label informativo de la ubicación donde se encuentra el archivo cargado en jpanel2
     }
 
     /**
@@ -89,15 +140,6 @@ public class Ventana1 extends javax.swing.JFrame {
         setBackground(java.awt.Color.darkGray);
 
         jTabbedPane1.setTabPlacement(javax.swing.JTabbedPane.LEFT);
-        jTabbedPane1.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                octjpanel1(evt);
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
 
         jPanel1.setBackground(new java.awt.Color(247, 246, 246));
         jPanel1.setEnabled(false);
@@ -484,6 +526,7 @@ public class Ventana1 extends javax.swing.JFrame {
                             this.jList3.setModel(model);
 
                             jButton2.setEnabled(true);
+                            jButton7.setEnabled(true);
                         } else { //si no comprobar q el ticket no se encuentre en la lista misma
 
                             boolean sw = false;
@@ -502,7 +545,8 @@ public class Ventana1 extends javax.swing.JFrame {
                                 this.jList1.setModel(model);
                                 this.jList3.setModel(model);
 
-                                jButton2.setEnabled(true);    
+                                jButton2.setEnabled(true);
+                                jButton7.setEnabled(true);
                             }
                         }
                     }
@@ -530,7 +574,7 @@ public class Ventana1 extends javax.swing.JFrame {
        Cargar c = new Cargar();
        c.setVisible(true);
     }//GEN-LAST:event_jButton6ActionPerformed
-    // dialogo Guardar - no implementado - no funcional
+    // Guardar - no implementado - no funcional
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
         /*   
@@ -539,6 +583,7 @@ public class Ventana1 extends javax.swing.JFrame {
         c.setVisible(true);*/
         
         // 
+        
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int resultado = fileChooser.showSaveDialog(this);
@@ -548,13 +593,29 @@ public class Ventana1 extends javax.swing.JFrame {
         }
         File archivo = fileChooser.getSelectedFile();
         
+        
         try {
+            
+            int size = model.getSize();
+            
+            
+            for (int i = 0; i < size; i++) {                
+                                   
+                    jList3.setSelectedIndex(i);
+                    
+                
+            } 
+            
+            
             PrintWriter salido = new PrintWriter(new FileWriter(archivo+".csv"));
+            
+            
+            
         } catch (Exception e) {
         }
         
     }//GEN-LAST:event_jButton7ActionPerformed
-    // Para mantener el jtextfield1 limpio cada vez q se enfoque
+    //      Para mantener el jtextfield1 limpio cada vez q se enfoque
     private void jText1(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jText1
         // TODO add your handling code here:
         jTextField1.setText(null);
@@ -573,6 +634,7 @@ public class Ventana1 extends javax.swing.JFrame {
             int size = model.getSize();
             if (size == 0) { 
                 jButton2.setEnabled(false);
+                jButton7.setEnabled(false);
             }else{
                 if (a == model.getSize()) {
                     //removed item in last position
@@ -589,7 +651,7 @@ public class Ventana1 extends javax.swing.JFrame {
         }       
         
     }//GEN-LAST:event_jButton2ActionPerformed
-    // para mantener el jtextfield2 limpio cada vez q se enfoque
+    //      para mantener el jtextfield2 limpio cada vez q se enfoque
     private void jTextField2(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField2
         // TODO add your handling code here:
         
@@ -663,7 +725,7 @@ public class Ventana1 extends javax.swing.JFrame {
         jButton4.setEnabled(false);
         
     }//GEN-LAST:event_jButton4ActionPerformed
-    // habilita boton devolver - setenable(true)
+    //      habilita boton devolver - setenable(true)
     private void jList2ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList2ValueChanged
         // TODO add your handling code here:
         jButton4.setEnabled(true);
@@ -688,6 +750,7 @@ public class Ventana1 extends javax.swing.JFrame {
                         this.jList3.setModel(model);
                         
                         jButton2.setEnabled(true);
+                        jButton7.setEnabled(true);
                     } else { //si no comprobar q el ticket no se encuentre en la lista
                         
                         boolean sw = false;
@@ -706,7 +769,8 @@ public class Ventana1 extends javax.swing.JFrame {
                             this.jList1.setModel(model);
                             this.jList3.setModel(model);
 
-                            jButton2.setEnabled(true);    
+                            jButton2.setEnabled(true);   
+                            jButton7.setEnabled(true);
                         }
                     }
                     
@@ -755,50 +819,45 @@ public class Ventana1 extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_busEnter
-    // para enfocar en jtextfield2 cada vez que se da enter
+    //      para enfocar en jtextfield2 cada vez que se da enter
     private void regEnter(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_regEnter
         // TODO add your handling code here:        
         jTextField2.requestFocus();
     }//GEN-LAST:event_regEnter
-    // para cada vez que se abre el jpanel2 mantener enfocado en el jtextfield2
+    //      para cada vez que se abre el jpanel2 mantener enfocado en el jtextfield2
     private void vvv(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_vvv
         // TODO add your handling code here:
         jTextField2.requestFocus();
     }//GEN-LAST:event_vvv
-    // para cada vez que se abre el jpanel1 mantener enfocado en el jtextfield1
+    //      para cada vez que se abre el jpanel1 mantener enfocado en el jtextfield1
     private void jpanel1focusjtextfield(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jpanel1focusjtextfield
         // TODO add your handling code here:
         jTextField1.requestFocus();
     }//GEN-LAST:event_jpanel1focusjtextfield
-    
-    private void octjpanel1(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_octjpanel1
-        // TODO add your handling code here:
-        
-
-    }//GEN-LAST:event_octjpanel1
-        // ingresar como admin
+    // ingresar como admin
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
         
-        // falta validar
-        String psw="1234";
-        String contr = JOptionPane.showInputDialog("Ingrese contraseña");
-        if (contr == null ? psw == null : contr.equals(psw)) {
-            jTextField1.setEnabled(true);
-            jTabbedPane1.add("Tickets", temp); // se adiciona el panel tickets        
-            jMenuItem1.setEnabled(true);
-            jButton4.setVisible(true);
-            jMenuItem3.setEnabled(true);
-            jTabbedPane1.setSelectedIndex(1);
-            jMenuItem2.setEnabled(false);
+        JPasswordField pwd = new JPasswordField(10);  
+        int action = JOptionPane.showConfirmDialog(null, pwd,"Ingrese Contraseña",JOptionPane.OK_CANCEL_OPTION); 
+        if (action==0) {
+            String contr = new String(pwd.getPassword());
+            if (contr == null ? psw == null : contr.equals(psw)) { //validando contraseña
+                jTextField1.setEnabled(true);
+                jTabbedPane1.add("Tickets", temp); // se adiciona el panel tickets        
+                jMenuItem1.setEnabled(true);
+                jButton4.setVisible(true);
+                jMenuItem3.setEnabled(true);
+                jTabbedPane1.setSelectedIndex(1);
+                jMenuItem2.setEnabled(false);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Contraseña errada");
+            }
+        } 
             
-        } else {
-            JOptionPane.showMessageDialog(null, "Contraseña errada");
-        }
-        
-       
     }//GEN-LAST:event_jMenuItem2ActionPerformed
-        // ingresar como user
+    // ingresar como user
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         jMenuItem3.setEnabled(false);   // menu admin-cambiar contraseña
@@ -825,17 +884,43 @@ public class Ventana1 extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-        // Cambio de contraseña
+    // Cambio de contraseña // falta colocar campo contraseñas ********
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
          
-         String contr = JOptionPane.showInputDialog("Ingrese contraseña vieja");
-         String contr2 = JOptionPane.showInputDialog("Ingrese contraseña vieja otra vez");
+         String contr = JOptionPane.showInputDialog("Ingrese contraseña vieja"); // colocar campo contraseñas
+         String contr2 = JOptionPane.showInputDialog("Ingrese contraseña vieja otra vez"); // colocar campo contraseñas
+         
          if (contr == null ? contr2 == null : contr.equals(contr2)&& (psw == null ? contr == null : psw.equals(contr)) ) {
-            String contr3 = JOptionPane.showInputDialog("Ingrese contraseña nueva");
-            String contr4 = JOptionPane.showInputDialog("Ingrese contraseña nueva otra vez");
-             if (contr3 == null ? contr4 == null : contr3.equals(contr4)) {
-                 psw=contr4;
+            String contr3 = JOptionPane.showInputDialog("Ingrese contraseña nueva"); // colocar campo contraseñas
+            String contr4 = JOptionPane.showInputDialog("Ingrese contraseña nueva otra vez"); // colocar campo contraseñas
+            if (contr3 == null ? contr4 == null : contr3.equals(contr4)) {
+                psw=contr4; // Actualiza la variable global de la contraseña
+                 
+                FileWriter fichero = null;
+                PrintWriter pw = null;
+                try
+                {
+                    fichero = new FileWriter("/home/diego/Escritorio/pwd");
+                    pw = new PrintWriter(fichero);
+                    
+                    pw.println(contr4); // escribe nuevo archivo pwd con nueva contraseña
+
+                } catch (Exception e) {
+                    
+                } finally {
+                   try {
+                   // Nuevamente aprovechamos el finally para 
+                   // asegurarnos que se cierra el fichero.
+                        if (null != fichero) {
+                           fichero.close();
+                        }
+                   } 
+                   catch (Exception e2) {
+                      
+                   }
+                }
+                 
                  JOptionPane.showMessageDialog(null,"Contraseña agregada correctamente");
              } else {
                  JOptionPane.showMessageDialog(null,"No coinciden las contraseñas nueva");

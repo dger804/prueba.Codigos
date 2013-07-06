@@ -28,11 +28,6 @@ public class PruebaCodigos {
             v.setVisible(true);
         } catch (Exception e) {
         }
-        
-        
-        
-        
-        
     }
     
     

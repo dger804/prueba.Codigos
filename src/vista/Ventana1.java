@@ -7,16 +7,21 @@ package vista;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.security.CodeSource;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
-import org.jcp.xml.dsig.internal.dom.Utils;
+import javax.swing.filechooser.FileNameExtensionFilter;
+//import org.jcp.xml.dsig.internal.dom.Utils;
 
 /**
  *
@@ -86,8 +91,6 @@ public class Ventana1 extends javax.swing.JFrame {
         temp=jTabbedPane1.getComponentAt(ind); //guarda temporalmente lo q esta en el index ind del jtabbed panel
         jTabbedPane1.removeTabAt(ind); //"esconder el jpanel1
         jButton4.setVisible(false); // boton devolver
-        jButton6.setVisible(false); // boton cargar
-        
         jLabel2.setVisible(false);  // label informativo del path donde se encuentra el archivo cargado en jpanel1
         jLabel5.setVisible(false);  // label informativo de la ubicación donde se encuentra el archivo cargado en jpanel2
     }
@@ -124,6 +127,7 @@ public class Ventana1 extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jList3 = new javax.swing.JList();
+        jButton8 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -185,7 +189,6 @@ public class Ventana1 extends javax.swing.JFrame {
         });
 
         jButton6.setText("Cargar ");
-        jButton6.setEnabled(false);
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
@@ -320,6 +323,13 @@ public class Ventana1 extends javax.swing.JFrame {
         jList3.setEnabled(false);
         jScrollPane3.setViewportView(jList3);
 
+        jButton8.setText("Cargar");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -337,7 +347,8 @@ public class Ventana1 extends javax.swing.JFrame {
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jButton5))))
+                                        .addComponent(jButton5))
+                                    .addComponent(jButton8)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton4))))
@@ -358,23 +369,28 @@ public class Ventana1 extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)
-                        .addGap(0, 257, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jButton3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton4)
+                                .addGap(0, 192, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButton8))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane2))))
+                .addGap(0, 52, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Registrar", jPanel2);
@@ -499,7 +515,6 @@ public class Ventana1 extends javax.swing.JFrame {
                     
                     //comprobar q el ticket no se encuentra en la lista
                     
-                    
                     int size = model.getSize();
                     // comprobar si el elemento a ingresar ya esta en la lista de regristrados
                     
@@ -567,24 +582,47 @@ public class Ventana1 extends javax.swing.JFrame {
                 }
             }  
     }//GEN-LAST:event_jButton1ActionPerformed
-    // dialogo cargar - no implementado - no funcional
+    // dialogo cargar 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        FileReader fr = null;
+        BufferedReader br = null;
+        JFileChooser fileChooser = new JFileChooser();
+        int resultado = fileChooser.showOpenDialog(this);
         
-       Cargar c = new Cargar();
-       c.setVisible(true);
+        if (resultado == JFileChooser.CANCEL_OPTION) {
+            return;
+        } else {
+            File archivo=fileChooser.getSelectedFile();
+            
+            
+            try {
+                fr = new FileReader (archivo);
+                br = new BufferedReader(fr);
+                
+                String linea;
+                while((linea=br.readLine())!=null){
+                    
+                    model.addElement(linea);
+                    
+                }
+                jList1.setModel(model);
+                jList3.setModel(model);
+            } catch (Exception ex) {
+            }
+            
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
-    // Guardar - no implementado - no funcional
+    // Guardar 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        /*   
-         * 
-        c = new Guardar();
-        c.setVisible(true);*/
         
-        // 
-        
+        String suffix=".csv";
         JFileChooser fileChooser = new JFileChooser();
+        
+        FileNameExtensionFilter filtroImagen=new FileNameExtensionFilter("csv","csv");
+        fileChooser.setFileFilter(filtroImagen);
+        
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int resultado = fileChooser.showSaveDialog(this);
         
@@ -593,25 +631,20 @@ public class Ventana1 extends javax.swing.JFrame {
         }
         File archivo = fileChooser.getSelectedFile();
         
-        
+        if(!fileChooser.getSelectedFile().getAbsolutePath().endsWith(suffix)){
+            archivo = new File(fileChooser.getSelectedFile() + suffix);
+            }
         try {
-            
             int size = model.getSize();
-            
-            
             for (int i = 0; i < size; i++) {                
-                                   
-                    jList3.setSelectedIndex(i);
-                    
-                
+                jList3.setSelectedIndex(i);
+                BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(archivo, true), "UTF8"));
+
+                out.write(model.getElementAt(i).toString());
+                out.write("\n");
+                out.close();
             } 
-            
-            
-            PrintWriter salido = new PrintWriter(new FileWriter(archivo+".csv"));
-            
-            
-            
-        } catch (Exception e) {
+         } catch (Exception e) {
         }
         
     }//GEN-LAST:event_jButton7ActionPerformed
@@ -930,6 +963,37 @@ public class Ventana1 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        FileReader fr = null;
+        BufferedReader br = null;
+        JFileChooser fileChooser = new JFileChooser();
+        int resultado = fileChooser.showOpenDialog(this);
+        
+        if (resultado == JFileChooser.CANCEL_OPTION) {
+            return;
+        } else {
+            File archivo=fileChooser.getSelectedFile();
+            
+            
+            try {
+                fr = new FileReader (archivo);
+                br = new BufferedReader(fr);
+                
+                String linea;
+                while((linea=br.readLine())!=null){
+                    
+                    model.addElement(linea);
+                    
+                }
+                jList1.setModel(model);
+                jList3.setModel(model);
+            } catch (Exception ex) {
+            }
+            
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -973,6 +1037,7 @@ public class Ventana1 extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

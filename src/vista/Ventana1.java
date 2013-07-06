@@ -14,10 +14,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.security.CodeSource;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -582,9 +580,13 @@ public class Ventana1 extends javax.swing.JFrame {
                 }
             }  
     }//GEN-LAST:event_jButton1ActionPerformed
-    // dialogo cargar 
+    // cargar - ingresar 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+        model.removeAllElements();
+        jList1.setModel(model);
+        jList3.setModel(model);
+        
         FileReader fr = null;
         BufferedReader br = null;
         JFileChooser fileChooser = new JFileChooser();
@@ -962,9 +964,14 @@ public class Ventana1 extends javax.swing.JFrame {
              JOptionPane.showMessageDialog(null,"Contraseña errada o no coinciden las contraseñas ");
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
-
+    // cargar - registrar
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
+        
+        model.removeAllElements();
+        jList1.setModel(model);
+        jList3.setModel(model);
+        
         FileReader fr = null;
         BufferedReader br = null;
         JFileChooser fileChooser = new JFileChooser();

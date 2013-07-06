@@ -36,8 +36,9 @@ public class Ventana1 extends javax.swing.JFrame {
      */
     public Ventana1() {
         initComponents();
-        /*
+        
         // <editor-fold defaultstate="collapsed" desc="Proceso para leer archivo pwd (contraseña)">
+        /*
         //CodeSource codeSource = funcionesUtilidad.class.getProtectionDomain().getCodeSource();
         //new File(codeSource.getLocation().toURI().getPath());
         //File jarFile = new File(Utils.class.getResource("/pwd").getFile());
@@ -82,9 +83,9 @@ public class Ventana1 extends javax.swing.JFrame {
             catch (Exception e2){ 
                 
             }
-        }
-        //</editor-fold>
-        */
+        }*/
+        //</editor-fold> //omitido por el momento
+        
         ind= 0; // indice siempre inicia en 0
         temp=jTabbedPane1.getComponentAt(ind); //guarda temporalmente lo q esta en el index ind del jtabbed panel
         jTabbedPane1.removeTabAt(ind); //"esconder el jpanel1
@@ -126,6 +127,7 @@ public class Ventana1 extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jList3 = new javax.swing.JList();
         jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
@@ -328,6 +330,14 @@ public class Ventana1 extends javax.swing.JFrame {
             }
         });
 
+        jButton9.setText("Guardar registrados");
+        jButton9.setEnabled(false);
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -336,26 +346,31 @@ public class Ventana1 extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton5))
-                                    .addComponent(jButton8)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(305, 305, 305))
+                            .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(41, 41, 41)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel5)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton5))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jButton8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton4))))
-                    .addComponent(jLabel3)
-                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(41, 41, 41)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jButton9))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButton4)))))
                 .addGap(0, 91, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -382,7 +397,9 @@ public class Ventana1 extends javax.swing.JFrame {
                                 .addGap(0, 192, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton8))))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jButton8)
+                                    .addComponent(jButton9)))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -739,6 +756,7 @@ public class Ventana1 extends javax.swing.JFrame {
             int a = jList3.getSelectedIndex();
             model.remove(a);
             jButton3.setEnabled(false);
+            jButton9.setEnabled(true);
         }
         jTextField2.setText(null);
         jButton4.setEnabled(false);
@@ -752,12 +770,15 @@ public class Ventana1 extends javax.swing.JFrame {
         if (a==-1) {
             JOptionPane.showMessageDialog(null, "Seleccione un elemento para devolver");
         } else {
-        }
-        model.addElement(model1.getElementAt(a));
-        jList3.setModel(model);
+            model.addElement(model1.getElementAt(a));
+            jList3.setModel(model);
         
-        model1.remove(a);
-        jButton4.setEnabled(false);
+            model1.remove(a);
+            jButton4.setEnabled(false);
+            jButton9.setEnabled(false);
+        }
+        
+        
         
     }//GEN-LAST:event_jButton4ActionPerformed
     //      habilita boton devolver - setenable(true)
@@ -1023,6 +1044,41 @@ public class Ventana1 extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_jButton8ActionPerformed
+    // guardar archivo de registrados
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        
+        String suffix=".csv";
+        JFileChooser fileChooser = new JFileChooser();
+        
+        FileNameExtensionFilter filtroImagen=new FileNameExtensionFilter("csv","csv");
+        fileChooser.setFileFilter(filtroImagen);
+        
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int resultado = fileChooser.showSaveDialog(this);
+        
+        if (resultado == JFileChooser.CANCEL_OPTION) {
+            return;
+        }
+        File archivo = fileChooser.getSelectedFile();
+        
+        if(!fileChooser.getSelectedFile().getAbsolutePath().endsWith(suffix)){
+            archivo = new File(fileChooser.getSelectedFile() + suffix);
+            }
+        try {
+            int size = model1.getSize();
+            for (int i = 0; i < size; i++) {                
+                jList2.setSelectedIndex(i);
+                BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(archivo, true), "UTF8"));
+
+                out.write(model1.getElementAt(i).toString());
+                out.write("\n");
+                out.close();
+            } 
+         } catch (Exception e) {
+        }
+        
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1068,6 +1124,7 @@ public class Ventana1 extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

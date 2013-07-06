@@ -36,7 +36,7 @@ public class Ventana1 extends javax.swing.JFrame {
      */
     public Ventana1() {
         initComponents();
-        
+        /*
         // <editor-fold defaultstate="collapsed" desc="Proceso para leer archivo pwd (contraseña)">
         //CodeSource codeSource = funcionesUtilidad.class.getProtectionDomain().getCodeSource();
         //new File(codeSource.getLocation().toURI().getPath());
@@ -84,7 +84,7 @@ public class Ventana1 extends javax.swing.JFrame {
             }
         }
         //</editor-fold>
-        
+        */
         ind= 0; // indice siempre inicia en 0
         temp=jTabbedPane1.getComponentAt(ind); //guarda temporalmente lo q esta en el index ind del jtabbed panel
         jTabbedPane1.removeTabAt(ind); //"esconder el jpanel1
@@ -511,7 +511,7 @@ public class Ventana1 extends javax.swing.JFrame {
             if (! jTextField1.getText().trim().equals("")) {
                 if (!jTextField1.getText().trim().equals("Digite el código aquí")) {
                     
-                    //comprobar q el ticket no se encuentra en la lista
+                    
                     
                     int size = model.getSize();
                     // comprobar si el elemento a ingresar ya esta en la lista de regristrados
@@ -530,7 +530,7 @@ public class Ventana1 extends javax.swing.JFrame {
                     if (sw1==true) {
                             JOptionPane.showMessageDialog(null, "Código ya esta registrado");
                     }else{
-                    
+                        //comprobar q el ticket no se encuentra en la lista
                     
                         if (size==0) { //si lista vacía entonces ingrese
 
@@ -586,10 +586,15 @@ public class Ventana1 extends javax.swing.JFrame {
         model.removeAllElements();
         jList1.setModel(model);
         jList3.setModel(model);
+        String suffix=".csv";
         
         FileReader fr = null;
         BufferedReader br = null;
         JFileChooser fileChooser = new JFileChooser();
+        
+        FileNameExtensionFilter filtroImagen=new FileNameExtensionFilter("csv","csv");
+        fileChooser.setFileFilter(filtroImagen);
+        
         int resultado = fileChooser.showOpenDialog(this);
         
         if (resultado == JFileChooser.CANCEL_OPTION) {
@@ -597,6 +602,9 @@ public class Ventana1 extends javax.swing.JFrame {
         } else {
             File archivo=fileChooser.getSelectedFile();
             
+            if(!fileChooser.getSelectedFile().getAbsolutePath().endsWith(suffix)){
+            archivo = new File(fileChooser.getSelectedFile() + suffix);
+            }
             
             try {
                 fr = new FileReader (archivo);
@@ -660,9 +668,7 @@ public class Ventana1 extends javax.swing.JFrame {
     // eliminar - ticket
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        
-        
-        if (jList1.getSelectedValue()!=null) {
+       if (jList1.getSelectedValue()!=null) {
             
             int a = jList1.getSelectedIndex();
             model.remove(a);
@@ -699,7 +705,6 @@ public class Ventana1 extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
        
-        
         if (!jTextField2.getText().trim().equals("")) {
             int size = model.getSize();
             String texto = jTextField2.getText();
@@ -728,17 +733,12 @@ public class Ventana1 extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         if (!jTextField2.getText().trim().equals("")) {
-            
-            
-            
             model1.addElement(jTextField2.getText());
             jList2.setModel(model1);
 
             int a = jList3.getSelectedIndex();
             model.remove(a);
             jButton3.setEnabled(false);
-            
-            
         }
         jTextField2.setText(null);
         jButton4.setEnabled(false);
@@ -768,47 +768,61 @@ public class Ventana1 extends javax.swing.JFrame {
     // Enter - jtextfield1 ingresar
     private void IngEnter(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_IngEnter
         // TODO add your handling code here:
-        
-        
-        
+     
         if(evt.getKeyCode() == KeyEvent.VK_ENTER){
            
             // ingresar - ticket
             if (! jTextField1.getText().trim().equals("")) {
                 if (!jTextField1.getText().trim().equals("Digite el código aquí")) {
-                    //comprobar q el ticket no se encuentra en la lista
                     int size = model.getSize();
-                    if (size==0) { //si lista vacía entonces ingrese
-                        
-                        model.addElement(jTextField1.getText());
-                        this.jList1.setModel(model);
-                        this.jList3.setModel(model);
-                        
-                        jButton2.setEnabled(true);
-                        jButton7.setEnabled(true);
-                    } else { //si no comprobar q el ticket no se encuentre en la lista
-                        
-                        boolean sw = false;
-                        
-                        for (int i = 0; i < size; i++) { // recorro la lista buscando el elemento
-                            String textol = model.getElementAt(i).toString();
-                            if ( textol.equals(jTextField1.getText())) {
-                                sw=true;    // encontrado
-                            }
+                    // comprobar si el elemento a ingresar ya esta en la lista de regristrados
+                    
+                    int size1 = model1.getSize();
+                    String texto = jTextField1.getText();
+                    boolean sw1=false;
+                    for (int i = 0; i < size1; i++) {
+                        String textol = model1.getElementAt(i).toString();
+                        if ( textol.equals(texto)) {                    
+                            jList2.setSelectedIndex(i);
+                            sw1=true;
                         }
-                        if (sw==true) { // enviar mensaje de repetido
-                            JOptionPane.showMessageDialog(null, "Código repetido");
-                            
-                        } else {    // si no encontrado agregarlo
+
+                    }      
+                    if (sw1==true) {
+                            JOptionPane.showMessageDialog(null, "Código ya esta registrado");
+                    }else{
+                        //comprobar q el ticket no se encuentra en la lista
+                        if (size==0) { //si lista vacía entonces ingrese
+
                             model.addElement(jTextField1.getText());
                             this.jList1.setModel(model);
                             this.jList3.setModel(model);
 
-                            jButton2.setEnabled(true);   
+                            jButton2.setEnabled(true);
                             jButton7.setEnabled(true);
+                        } else { //si no comprobar q el ticket no se encuentre en la lista
+
+                            boolean sw = false;
+
+                            for (int i = 0; i < size; i++) { // recorro la lista buscando el elemento
+                                String textol = model.getElementAt(i).toString();
+                                if ( textol.equals(jTextField1.getText())) {
+                                    sw=true;    // encontrado
+                                }
+                            }
+                            if (sw==true) { // enviar mensaje de repetido
+                                JOptionPane.showMessageDialog(null, "Código repetido");
+
+                            } else {    // si no encontrado agregarlo
+                                model.addElement(jTextField1.getText());
+                                this.jList1.setModel(model);
+                                this.jList3.setModel(model);
+
+                                jButton2.setEnabled(true);   
+                                jButton7.setEnabled(true);
+                            }
                         }
                     }
-                    
                     jTextField1.setText(null);                    
                     this.jTextField1.requestFocus();                    
                     }else{
@@ -872,25 +886,26 @@ public class Ventana1 extends javax.swing.JFrame {
     // ingresar como admin
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-        
+        /*
         JPasswordField pwd = new JPasswordField(10);  
         int action = JOptionPane.showConfirmDialog(null, pwd,"Ingrese Contraseña",JOptionPane.OK_CANCEL_OPTION); 
         if (action==0) {
             String contr = new String(pwd.getPassword());
             if (contr == null ? psw == null : contr.equals(psw)) { //validando contraseña
+            * */
                 jTextField1.setEnabled(true);
                 jTabbedPane1.add("Tickets", temp); // se adiciona el panel tickets        
                 jMenuItem1.setEnabled(true);
                 jButton4.setVisible(true);
-                jMenuItem3.setEnabled(true);
+                // jMenuItem3.setEnabled(true); cambiar contraseña
                 jTabbedPane1.setSelectedIndex(1);
                 jMenuItem2.setEnabled(false);
-
+/*
             } else {
                 JOptionPane.showMessageDialog(null, "Contraseña errada");
             }
         } 
-            
+         */   
     }//GEN-LAST:event_jMenuItem2ActionPerformed
     // ingresar como user
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -971,10 +986,15 @@ public class Ventana1 extends javax.swing.JFrame {
         model.removeAllElements();
         jList1.setModel(model);
         jList3.setModel(model);
+        String suffix=".csv";
         
         FileReader fr = null;
         BufferedReader br = null;
         JFileChooser fileChooser = new JFileChooser();
+        
+        FileNameExtensionFilter filtroImagen=new FileNameExtensionFilter("csv","csv");
+        fileChooser.setFileFilter(filtroImagen);
+        
         int resultado = fileChooser.showOpenDialog(this);
         
         if (resultado == JFileChooser.CANCEL_OPTION) {
@@ -982,6 +1002,9 @@ public class Ventana1 extends javax.swing.JFrame {
         } else {
             File archivo=fileChooser.getSelectedFile();
             
+            if(!fileChooser.getSelectedFile().getAbsolutePath().endsWith(suffix)){
+            archivo = new File(fileChooser.getSelectedFile() + suffix);
+            }
             
             try {
                 fr = new FileReader (archivo);
